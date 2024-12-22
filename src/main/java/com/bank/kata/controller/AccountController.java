@@ -1,12 +1,12 @@
 package com.bank.kata.controller;
 
+import com.bank.kata.dto.StatementResponse;
 import com.bank.kata.dto.TransactionRequest;
 import com.bank.kata.service.AccountService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
@@ -27,5 +27,10 @@ public class AccountController {
     public ResponseEntity<String> withdraw(@RequestBody TransactionRequest request) {
         accountService.withdraw(request.getAmount());
         return ResponseEntity.ok("Withdrawal successful");
+    }
+
+    @GetMapping("/statement")
+    public List<StatementResponse> getStatement() {
+        return accountService.getStatement();
     }
 }

@@ -22,4 +22,10 @@ public class AccountController {
         accountService.deposit(request.getAmount());
         return ResponseEntity.ok("Deposit successful");
     }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<String> withdraw(@RequestBody TransactionRequest request) {
+        accountService.withdraw(request.getAmount());
+        return ResponseEntity.ok("Withdrawal successful");
+    }
 }

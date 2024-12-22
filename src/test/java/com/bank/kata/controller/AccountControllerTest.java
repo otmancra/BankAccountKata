@@ -31,4 +31,26 @@ public class AccountControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
     }
+
+
+    @Test
+    public void testWithdraw() throws Exception {
+        TransactionRequest depositRequest = new TransactionRequest();
+        depositRequest.setAmount(100.0);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/account/deposit")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(depositRequest)))
+                .andExpect(status().isOk());
+
+        TransactionRequest withdrawRequest = new TransactionRequest();
+        withdrawRequest.setAmount(50.0);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/account/withdraw")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(withdrawRequest)))
+                .andExpect(status().isOk());
+    }
 }

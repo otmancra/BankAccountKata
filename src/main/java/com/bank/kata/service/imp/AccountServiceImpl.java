@@ -1,5 +1,6 @@
 package com.bank.kata.service.imp;
 
+import com.bank.kata.exception.InsufficientFundsException;
 import com.bank.kata.exception.InvalidTransactionException;
 import com.bank.kata.model.OperationType;
 import com.bank.kata.model.Transaction;
@@ -20,6 +21,14 @@ public class AccountServiceImpl implements AccountService {
         validateAmount(amount);
         balance += amount;
         transactions.add(new Transaction(OperationType.DEPOSIT, amount, balance, LocalDate.now()));
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        validateAmount(amount);
+        if (balance < amount) throw new InsufficientFundsException("Insufficient balance");
+        balance -= amount;
+        transactions.add(new Transaction(OperationType.WITHDRAW, amount, balance, LocalDate.now()));
     }
 
     private void validateAmount(double amount) {
